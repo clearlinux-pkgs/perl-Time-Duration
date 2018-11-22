@@ -4,7 +4,7 @@
 #
 Name     : perl-Time-Duration
 Version  : 1.20
-Release  : 2
+Release  : 3
 URL      : https://cpan.metacpan.org/authors/id/N/NE/NEILB/Time-Duration-1.20.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/N/NE/NEILB/Time-Duration-1.20.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libtime-duration-perl/libtime-duration-perl_1.20-1.debian.tar.xz
@@ -80,7 +80,7 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.26.1/Time/Duration.pm
+/usr/lib/perl5/vendor_perl/5.28.0/Time/Duration.pm
 
 %files dev
 %defattr(-,root,root,-)
