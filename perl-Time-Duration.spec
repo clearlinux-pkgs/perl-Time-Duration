@@ -4,14 +4,15 @@
 #
 Name     : perl-Time-Duration
 Version  : 1.21
-Release  : 10
+Release  : 11
 URL      : https://cpan.metacpan.org/authors/id/N/NE/NEILB/Time-Duration-1.21.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/N/NE/NEILB/Time-Duration-1.21.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libtime-duration-perl/libtime-duration-perl_1.20-1.debian.tar.xz
-Summary  : rounded or exact English expression of durations
+Summary  : 'rounded or exact English expression of durations'
 Group    : Development/Tools
 License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
 Requires: perl-Time-Duration-license = %{version}-%{release}
+Requires: perl-Time-Duration-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 
 %description
@@ -23,7 +24,6 @@ rounded or exact English expression of durations
 Summary: dev components for the perl-Time-Duration package.
 Group: Development
 Provides: perl-Time-Duration-devel = %{version}-%{release}
-Requires: perl-Time-Duration = %{version}-%{release}
 Requires: perl-Time-Duration = %{version}-%{release}
 
 %description dev
@@ -38,18 +38,28 @@ Group: Default
 license components for the perl-Time-Duration package.
 
 
+%package perl
+Summary: perl components for the perl-Time-Duration package.
+Group: Default
+Requires: perl-Time-Duration = %{version}-%{release}
+
+%description perl
+perl components for the perl-Time-Duration package.
+
+
 %prep
 %setup -q -n Time-Duration-1.21
-cd ..
-%setup -q -T -D -n Time-Duration-1.21 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libtime-duration-perl_1.20-1.debian.tar.xz
+cd %{_builddir}/Time-Duration-1.21
 mkdir -p deblicense/
-cp -r %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/Time-Duration-1.21/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/Time-Duration-1.21/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -59,7 +69,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -68,7 +78,7 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-Time-Duration
-cp LICENSE %{buildroot}/usr/share/package-licenses/perl-Time-Duration/LICENSE
+cp %{_builddir}/Time-Duration-1.21/LICENSE %{buildroot}/usr/share/package-licenses/perl-Time-Duration/00f3e582f2a5ef8a04d655ac858ff47dbec2042e
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -81,7 +91,6 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/Time/Duration.pm
 
 %files dev
 %defattr(-,root,root,-)
@@ -89,4 +98,8 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/perl-Time-Duration/LICENSE
+/usr/share/package-licenses/perl-Time-Duration/00f3e582f2a5ef8a04d655ac858ff47dbec2042e
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/Time/Duration.pm
