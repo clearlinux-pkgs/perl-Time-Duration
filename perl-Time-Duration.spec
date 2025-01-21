@@ -4,7 +4,7 @@
 #
 Name     : perl-Time-Duration
 Version  : 1.21
-Release  : 25
+Release  : 26
 URL      : https://cpan.metacpan.org/authors/id/N/NE/NEILB/Time-Duration-1.21.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/N/NE/NEILB/Time-Duration-1.21.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libt/libtime-duration-perl/libtime-duration-perl_1.20-1.debian.tar.xz
